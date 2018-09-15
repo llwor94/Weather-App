@@ -34,7 +34,7 @@ export default {
         this.forecast = response.data.forecast.data;
         this.city = `${response.data.city}, ${response.data.state}`;
         this.icon = response.data.weather.icon;
-
+        this.loaded = true;
         // console.log(
         //   moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
         //     'MMMM Do YYYY, h:mm:ss a',
