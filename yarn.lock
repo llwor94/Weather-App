@@ -6515,6 +6515,10 @@ vue-skycon@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vue-skycon/-/vue-skycon-1.0.3.tgz#d05eadcdd475cfeb089006299bcd5dd7621d19cb"
 
+vue-spinner@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-spinner/-/vue-spinner-1.0.3.tgz#eecd3f79f63a815b690e9d54b199ab65be695499"
+
 vue-style-loader@^4.1.0:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"

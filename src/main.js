@@ -4,6 +4,7 @@ import skycon from 'vue-skycon';
 import moment from 'moment';
 
 Vue.config.productionTip = false;
+
 Vue.use(moment);
 Vue.use(skycon);
 new Vue({

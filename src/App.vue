@@ -1,12 +1,14 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import axios from 'axios';
-import moment from 'moment';
+// import moment from 'moment';
+import DotLoader from 'vue-spinner/src/DotLoader';
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
+    DotLoader,
   },
   data() {
     return {
@@ -15,12 +17,13 @@ export default {
       summary: '',
       icon: '',
       forecast: [],
+      loaded: false,
     };
   },
   mounted() {
     navigator.geolocation.getCurrentPosition(position => {
       let { latitude, longitude } = position.coords;
-      console.log(position.coords);
+      // console.log(position.coords);
       axios({
         method: 'post',
         url: `https://weather-proxy-db.herokuapp.com/location`,
@@ -31,6 +34,7 @@ export default {
         this.forecast = response.data.forecast.data;
         this.city = `${response.data.city}, ${response.data.state}`;
         this.icon = response.data.weather.icon;
+
         // console.log(
         //   moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
         //     'MMMM Do YYYY, h:mm:ss a',
@@ -48,7 +52,8 @@ export default {
 
 <template>
   <div class="app-wrapper">
-    <HelloWorld v-bind:temp="temp" v-bind:city='city' v-bind:summary='summary'/>
+    <dot-loader v-if="!loaded" color="white"/>
+    <HelloWorld v-else v-bind:temp="temp" v-bind:city='city' v-bind:summary='summary'/>
     <skycon v-bind:condition='icon' color='white'/>
   </div>
 </template>
