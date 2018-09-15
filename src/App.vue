@@ -20,9 +20,10 @@ export default {
   mounted() {
     navigator.geolocation.getCurrentPosition(position => {
       let { latitude, longitude } = position.coords;
+      console.log(position.coords);
       axios({
         method: 'post',
-        url: `http:/weather-proxy-db.herokuapp.com/location`,
+        url: `http://weather-proxy-db.herokuapp.com`,
         data: { latitude, longitude },
       }).then(response => {
         console.log(response.data);
