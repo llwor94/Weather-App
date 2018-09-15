@@ -23,7 +23,7 @@ export default {
       console.log(position.coords);
       axios({
         method: 'post',
-        url: `https://weather-proxy-db.herokuapp.com`,
+        url: `https://weather-proxy-db.herokuapp.com/location`,
         data: { latitude, longitude },
       }).then(response => {
         this.temp = Math.round(response.data.weather.temperature);
