@@ -22,7 +22,7 @@ export default {
       let { latitude, longitude } = position.coords;
       axios({
         method: 'post',
-        url: `http://localhost:3600/location`,
+        url: `http:/weather-proxy-db.herokuapp.com/location`,
         data: { latitude, longitude },
       }).then(response => {
         console.log(response.data);
