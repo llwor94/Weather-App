@@ -1,28 +1,81 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+import axios from 'axios';
+import moment from 'moment';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+  data() {
+    return {
+      temp: '',
+      city: '',
+      summary: '',
+      icon: '',
+      forecast: [],
+    };
+  },
+  mounted() {
+    navigator.geolocation.getCurrentPosition(position => {
+      let { latitude, longitude } = position.coords;
+      axios({
+        method: 'post',
+        url: `http://localhost:3600/location`,
+        data: { latitude, longitude },
+      }).then(response => {
+        console.log(response.data);
+        this.temp = Math.round(response.data.weather.temperature);
+        this.summary = response.data.weather.summary;
+        this.forecast = response.data.forecast.data;
+        this.city = `${response.data.city}, ${response.data.state}`;
+        this.icon = response.data.weather.icon;
+        console.log(
+          moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
+            'MMMM Do YYYY, h:mm:ss a',
+          ),
+          Date.now(),
+          moment(response.data.forecast.data[0].sunsetTime * 1000, 'x').format(
+            'MMMM Do YYYY, h:mm:ss a',
+          ),
+        );
+      });
+    });
+  },
+};
 </script>
 
+<template>
+  <div class="app-wrapper">
+    <HelloWorld v-bind:temp="temp" v-bind:city='city' v-bind:summary='summary'/>
+    <skycon v-bind:condition='icon' color='white'/>
+  </div>
+</template>
+
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-image: url(./assets/day.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.app-wrapper {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
