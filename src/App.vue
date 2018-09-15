@@ -26,20 +26,20 @@ export default {
         url: `http://weather-proxy-db.herokuapp.com`,
         data: { latitude, longitude },
       }).then(response => {
-        console.log(response.data);
+        
         this.temp = Math.round(response.data.weather.temperature);
         this.summary = response.data.weather.summary;
         this.forecast = response.data.forecast.data;
         this.city = `${response.data.city}, ${response.data.state}`;
         this.icon = response.data.weather.icon;
-        console.log(
-          moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
-            'MMMM Do YYYY, h:mm:ss a',
-          ),
-          Date.now(),
-          moment(response.data.forecast.data[0].sunsetTime * 1000, 'x').format(
-            'MMMM Do YYYY, h:mm:ss a',
-          ),
+        // console.log(
+        //   moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
+        //     'MMMM Do YYYY, h:mm:ss a',
+        //   ),
+        //   Date.now(),
+        //   moment(response.data.forecast.data[0].sunsetTime * 1000, 'x').format(
+        //     'MMMM Do YYYY, h:mm:ss a',
+        //   ),
         );
       });
     });
