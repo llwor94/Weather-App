@@ -26,7 +26,6 @@ export default {
         url: `http://weather-proxy-db.herokuapp.com`,
         data: { latitude, longitude },
       }).then(response => {
-        
         this.temp = Math.round(response.data.weather.temperature);
         this.summary = response.data.weather.summary;
         this.forecast = response.data.forecast.data;
@@ -40,7 +39,7 @@ export default {
         //   moment(response.data.forecast.data[0].sunsetTime * 1000, 'x').format(
         //     'MMMM Do YYYY, h:mm:ss a',
         //   ),
-        );
+        //);
       });
     });
   },
