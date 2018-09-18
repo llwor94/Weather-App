@@ -18,6 +18,7 @@ export default {
       icon: '',
       forecast: [],
       loaded: false,
+      isDay: false,
     };
   },
   mounted() {
@@ -35,15 +36,12 @@ export default {
         this.city = `${response.data.city}, ${response.data.state}`;
         this.icon = response.data.weather.icon;
         this.loaded = true;
-        // console.log(
-        //   moment(response.data.forecast.data[0].sunriseTime * 1000, 'x').format(
-        //     'MMMM Do YYYY, h:mm:ss a',
-        //   ),
-        //   Date.now(),
-        //   moment(response.data.forecast.data[0].sunsetTime * 1000, 'x').format(
-        //     'MMMM Do YYYY, h:mm:ss a',
-        //   ),
-        //);
+        if (
+          Date.now() > response.data.forecast.data[0].sunriseTime * 1000 &&
+          Date.now() < response.data.forecast.data[0].sunsetTime * 1000
+        ) {
+          this.isDay = true;
+        }
       });
     });
   },
@@ -51,10 +49,12 @@ export default {
 </script>
 
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" v-bind:class="{day: isDay}">
+    <div class="background" >
     <dot-loader v-if="!loaded" color="white"/>
     <HelloWorld v-else v-bind:temp="temp" v-bind:city='city' v-bind:summary='summary'/>
     <skycon v-bind:condition='icon' color='white'/>
+    </div>
   </div>
 </template>
 
@@ -64,23 +64,33 @@ export default {
   padding: 0;
   box-sizing: border-box;
 }
-#app {
+#app,
+html,
+body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   width: 100%;
   height: 100%;
 }
 
-body {
-  background-image: url(./assets/day.png);
+.app-wrapper {
+  background-image: url(./assets/night.png);
   background-repeat: no-repeat;
   background-size: cover;
+  width: 100%;
+  height: 100%;
 }
 
-.app-wrapper {
+.background {
   margin: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.day {
+  background-image: url(./assets/day.png);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 </style>
